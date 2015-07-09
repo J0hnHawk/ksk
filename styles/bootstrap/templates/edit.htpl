@@ -1,0 +1,68 @@
+{if $fehler}
+<h2>Fehler</h2>
+{$fehler} {elseif $success}
+<h2>Information</h2>
+{$success} {else}
+
+<div id="eintrag_daten">
+	<form action="index.php?seite=neu" method="post">
+		<input type="hidden" name="forumlar" value="speichern"> <input name="datum" type="hidden" value="{$ks_day|date_format:'%d.%m.%Y'}">
+		<header>
+			<h1>Eintrag für den {$ks_day|date_format:'%d.%m.%Y'}</h1>
+			<p style="text-align: right;">
+				<a href="#" id="datum_waehlen">anderes Datum wählen</a>
+			</p>
+		</header>
+		<section>
+			<h2>
+				<label id="art">Kopfschmerzart</label>
+			</h2>
+			<p>{html_checkboxes name='art' selected=$ks_art labels=false options=$ks_arten separator=''}</p>
+		</section>
+		<section>
+			<h2>
+				<label id="medikament">Medikament</label>
+			</h2>
+			<p>{html_checkboxes name='medikament' selected=$ks_medis labels=false options=$medikamente separator='<br />'}</p>
+		</section>
+		<section>
+			<h2>
+				<label id="graduierung">Graduierung</label>
+			</h2>
+			<p>{html_radios name='graduierung' selected=$ks_grad labels=false options=$grad separator=''}</p>
+		</section>
+		<section>
+			<h2>
+				<label id="graduierung">Zusätzliche Informationen</label>
+			</h2>
+			<p>
+				<textarea cols="50" name="info">{$ks_info}</textarea>
+			</p>
+		</section>
+
+
+
+
+
+		<footer>
+			{if $ks_lastchange}<span style="font-size: x-small; float: left">Letzte Änderung: {$ks_lastchange|date_format:'%d.%m.%Y um %H:%M'}</span>{/if}
+			<p style="text-align: right">
+				<input type="submit" name="button" value="Eintrag löschen"> <input type="submit" name="button" value="Eintrag speichern">
+			</p>
+		</footer>
+	</form>
+	</p>
+</div>
+<div id="eintrag_datum">
+	<header>
+		<h1>Datum auswählen</h1>
+		<form action="index.php?seite=neu" method="post">
+			<input type="hidden" name="forumlar" value="datum">
+			<p>
+				<label id="datum">Datum</label><br> <input id="datum" name="datum" type="date" value="{$ks_day|date_format:'%Y-%m-%d'}">
+			</p>
+			<input type="submit">
+		</form>
+	</header>
+</div>
+{/if}

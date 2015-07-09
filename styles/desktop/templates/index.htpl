@@ -1,0 +1,15 @@
+{config_load file='style.cfg'} {include file="header.htpl" title="KSK -
+Kopfschmerzkalender"}
+<h1>KSK - Kopfschmerzkalender</h1>
+<a href="?seite=neu">neuer Eintrag</a>
+&bull;
+<a href="?seite=monat">Monat</a>
+&bull;
+<a href="?seite=halbjahr">Halbjahr</a>
+&bull;
+<a href="?seite=logout">Logout</a>
+{assign var="datei" value="./styles/$style/templates/$seite.htpl"} {if
+file_exists($datei)} {include file="$seite.htpl"} {else}
+<h1>Fehler!</h1>
+<p>Die Datei "{$datei}" existiert nicht.</p>
+{debug} {/if} {include file="footer.htpl"}

@@ -1,0 +1,56 @@
+<header>
+<h1>
+	<a href="index.php?seite=monat&amp;monat={$vmonat}"><<</a> &bull; {$amonat|date_format:'%B %Y'|utf8_encode} &bull; <a
+		href="index.php?seite=monat&amp;monat={$nmonat}">>></a>
+</h1>
+<p>
+<form action="index.php?seite=monat" method="POST">
+	Monat: {html_options name=monat options=$monate
+	selected=$anzeige.monat+0} Jahr: {html_options name=jahr options=$jahre
+	selected=$anzeige.jahr} <input type="submit">
+</form>
+</p>
+</header>
+<section>
+<p>
+<table border="1">
+	<thead>
+		<tr>
+			<th rowspan="2">Datum</th>
+			<th colspan="3">Art</th>
+			<th rowspan="2">Medikamente</th>
+			<th colspan="5">Graduierung</th>
+			<th rowspan="2">Informationen</th>
+		</tr>
+		<tr>
+			<th>M</th>
+			<th>S</th>
+			<th>?</th>
+			<th>0</th>
+			<th>1</th>
+			<th>2</th>
+			<th>3</th>
+			<th>4</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach from=$tage key=datum item=daten}
+		{assign var="td" value="<td>"}
+		{if $datum|date_format:'%w' == 0 || $datum|date_format:'%w' == 6}
+			{assign var="td" value="<td style='background-color:#f16529;'>"}
+		{/if}
+		{assign var="sep" value="</td>{$td}"}
+		<tr>
+			{$td}<a href="index.php?seite=edit&amp;date={$datum}">{$datum|date_format:'%d.%m.%Y'}</a>
+			</td>
+			{$td}{html_checkboxes name='art' selected=$daten.ks_art
+				options=$ks_arten labels=false separator=$sep} {foreach from=$daten.ks_medis
+				item=medi}{$medikamente[$medi]}, {/foreach}</td>
+			{$td}{html_radios name="graduierung[$datum]"
+				selected=$daten.ks_grad options=$grad labels=false separator=$sep} {$daten.ks_info}</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+</p>
+</section>

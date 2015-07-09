@@ -1,0 +1,26 @@
+{if $error}
+<h3>Fehler!</h3>
+<p>Der eingegebene Benutzername oder das Passwort ist nicht korrekt.</p>
+{/if}
+<form action="?seite=login" method="post">
+	<p>
+	
+	
+	<table>
+		<tr>
+			<td>Username:</td>
+			<td><input name="user_name" type="text"></td>
+		</tr>
+		<tr>
+			<td>Passwort:</td>
+			<td><input name="user_pass" type="password"></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="checkbox" name="autologin"> zukünftig automatisch einloggen</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: right;"><input type="submit"></td>
+		</tr>
+	</table>
+	</p>
+</form>

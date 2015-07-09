@@ -1,0 +1,43 @@
+{config_load file='style.cfg'} {include file="header.htpl" title="KSK -
+Kopfschmerzkalender"}
+<div class="header-container">
+	<header class="wrapper clearfix">
+	<h1 class="title">Kopfschmerzkalender</h1>
+	<nav>
+	<ul>
+		<li><a href="index.php?seite=neu">Eintrag</a></li>
+		<li><a href="index.php?seite=monat">Monat</a></li>
+		<li><a href="index.php?seite=auswertung">Auswertung</a></li>
+	</ul>
+	</nav></header>
+</div>
+<div class="main-container">
+	<div class="main wrapper clearfix">
+		<article> {assign var="datei"
+		value="./styles/$style/templates/$seite.htpl"} {if
+		file_exists($datei)} {include file="$seite.htpl"} {else}
+		<h1>Fehler!</h1>
+		<p>Die Datei "{$datei}" existiert nicht.</p>
+		{debug} {/if} </article>
+		{if $smarty.session.user_id}
+		<aside id="profil" style="margin-bottom: 20px;">
+		<h3>Hallo {$smarty.session.user}</h3>
+		<ul>
+			<li><a href="index.php?seite=logout">Logout</a></li>
+			<li><a href="#" id="toggle">Kopfschmerztage {if $warning}ausblenden{else}anzeigen{/if}</a></li>
+			<li><a href="#">Einstellungen</a></li>
+		</ul>
+		</aside>
+		<br>{/if}
+		<aside id="kstage">        
+		<h3>Monat {if isset($amonat)}{$amonat|date_format:'%B %Y'|utf8_encode}{else}{$smarty.now|date_format:'%B %Y'|utf8_encode}{/if}</h3>
+		<p>
+			Tage mit Kopfschmerzen: {$meditage.kstage}<br> Tage mit
+			Schmerzmitteln: {$meditage.meditage}
+		</p>
+		</aside>
+	</div>
+	<!-- #main -->
+</div>
+<!-- #main-container -->
+{include file="footer.htpl"}
