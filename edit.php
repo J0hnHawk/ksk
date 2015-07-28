@@ -154,6 +154,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 $meditage = meditage($ks_day);
 $smarty->assign('meditage', $meditage);
-if($meditage['meditage'] > 8) $smarty->assign('warning', 1); else $smarty->assign('warning', 0);
+if($meditage['meditage'] >= 8) $smarty->assign('warning', 1); else $smarty->assign('warning', 0);
 
 ?>
