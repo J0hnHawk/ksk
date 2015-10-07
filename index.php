@@ -14,7 +14,7 @@ if(!file_exists("config.php")) {
 }
 require("config.php");
 
-$footer_text = "Kopfschmerzkalender 1.1.1 &bull; &copy; 2014-2015 Lars Bleckwenn";
+$footer_text = "Kopfschmerzkalender 1.2.0 &bull; &copy; 2014-2015 Lars Bleckwenn";
 
 $stkstage = $table_prefix."kstage";
 $stmedtag = $table_prefix."medtage";
@@ -34,7 +34,7 @@ if(isset($_COOKIE['style']) && in_array($_COOKIE['style'], $styles)) {
 }
 
 //Manage Seiten
-$seiten = array('edit', 'monat', 'kalender', 'login', 'logout'); //  , 'import'
+$seiten = array('edit', 'monat', 'kalender', 'login', 'logout', 'auswertung'); //  , 'import'
 $seite = GetParam('seite','G',$seiten[0]);
 $login = new loginCheck($sqldb, $table_prefix);
 if(!$login->check_access(session_id())) $seite = 'login';

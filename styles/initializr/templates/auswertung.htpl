@@ -1,0 +1,11 @@
+<header>
+<h1>
+	Auswertung über 6 Monate
+</h1>
+<p>
+Zulässiger Zeitraum zwischen {$ekt|date_format:'%B %Y'} bis {$lkt|date_format:'%B %Y'}
+</p>
+</header>
+<form action="index.php?seite=auswertung_pdfgen" method="POST" target="_BLANK">
+<p>Auswertung ab {html_options name=startmonat options=$sme selected=$customer_id} <input type="submit" value="anzeigen">
+</form>
