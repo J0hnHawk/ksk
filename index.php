@@ -1,4 +1,12 @@
 <?php
+/*
+ * TO-DO Liste
+ * 
+ * * Einstellungen:
+ *   - variabel machen für Kopfschmerz-/Schmerzmitteltage in Seitenbanner
+ *   - Zusätzliche Seite in PDF-Auswertung
+ * 
+ */
 session_start();
 ini_set ( 'display_errors', 1 );
 ini_set ( 'display_startup_errors', 1 );
@@ -14,7 +22,7 @@ if(!file_exists("config.php")) {
 }
 require("config.php");
 
-$footer_text = "Kopfschmerzkalender 1.2.2 &bull; &copy; 2014-2015 Lars Bleckwenn";
+$footer_text = "Kopfschmerzkalender 1.2.3 &bull; &copy; 2014-2015 Lars Bleckwenn";
 
 $stkstage = $table_prefix."kstage";
 $stmedtag = $table_prefix."medtage";
