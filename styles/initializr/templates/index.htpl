@@ -27,15 +27,15 @@ Kopfschmerzkalender"}
 			<li><a href="#" id="toggle">Kopfschmerztage {if $warning}ausblenden{else}anzeigen{/if}</a></li>
 			<li><a href="#">Einstellungen</a></li>
 		</ul>
-		</aside>
+		
 		<br>{/if}
-		<aside id="kstage">        
+		<span id="kstage">        
 		<h3>Monat {if isset($amonat)}{$amonat|date_format:'%B %Y'|utf8_encode}{else}{$smarty.now|date_format:'%B %Y'|utf8_encode}{/if}</h3>
 		<p>
 			Tage mit Kopfschmerzen: {$meditage.kstage}<br> Tage mit
 			Schmerzmitteln: {$meditage.meditage}
 		</p>
-		</aside>
+		</span></aside>
 	</div>
 	<!-- #main -->
 </div>

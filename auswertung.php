@@ -23,7 +23,10 @@ $sme = array ();
 $s1 = 0;
 do {
 	$monat = mktime ( 0, 0, 0, date ( 'm', $ekt ) + $s1, 1, date ( 'Y', $ekt ) );
-	$sme [$monat] = date ( 'F Y', $monat );
+	$sme [$monat] = strftime( '%B %Y', $monat );
 	$s1 ++;
 } while ( mktime ( 0, 0, 0, date ( 'm', $ekt ) + $s1 + 5, 1, date ( 'Y', $ekt ) ) < $lkt );
 $smarty->assign ( 'sme', $sme );
+$meditage = meditage(time());
+$smarty->assign('meditage', $meditage);
+if($meditage['meditage'] >= 8) $smarty->assign('warning', 1); else $smarty->assign('warning', 0);

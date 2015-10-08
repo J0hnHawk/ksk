@@ -34,7 +34,7 @@ if(isset($_COOKIE['style']) && in_array($_COOKIE['style'], $styles)) {
 }
 
 //Manage Seiten
-$seiten = array('edit', 'monat', 'kalender', 'login', 'logout', 'auswertung'); //  , 'import'
+$seiten = array('edit', 'monat', 'kalender', 'login', 'logout', 'auswertung', 'auswertung_pdfgen'); //  , 'import'
 $seite = GetParam('seite','G',$seiten[0]);
 $login = new loginCheck($sqldb, $table_prefix);
 if(!$login->check_access(session_id())) $seite = 'login';
