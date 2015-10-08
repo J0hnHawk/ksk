@@ -3,7 +3,7 @@
 	Auswertung über 6 Monate
 </h1>
 <p>
-Zulässiger Zeitraum zwischen {$ekt|date_format:'%B %Y'} bis {$lkt|date_format:'%B %Y'}
+Zulässiger Zeitraum zwischen {$ekt|date_format:'%B %Y'|utf8_encode} bis {$lkt|date_format:'%B %Y'|utf8_encode}
 </p>
 </header>
 <section>

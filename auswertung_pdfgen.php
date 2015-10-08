@@ -42,7 +42,7 @@ $pdf->SetLeftMargin ( 10 );
 $pdf->SetTopMargin ( 15 );
 $pdf->AddPage ();
 for($m = $n; $m < $n + 6; $m ++) {
-	$pdf->Cell ( 46, 5, strftime( '%B %Y', mktime ( 0, 0, 0, $m, 1, $Y ) ), 0, 0, C );
+	$pdf->Cell ( 46, 5, strftime ( '%B %Y', mktime ( 0, 0, 0, $m, 1, $Y ) ), 0, 0, C );
 }
 $pdf->Ln ();
 $pdf->SetFont ( 'Arial', '', 6 );
@@ -124,13 +124,13 @@ foreach ( $tage as $tag => $data ) {
 	if ($data ['ks_info'] == "")
 		continue;
 	$pdf->Cell ( 30, 6, date ( 'd.m.Y', $tag ), RB );
-	$pdf->Cell ( 0, 6, html_entity_decode ( utf8_decode ( $data ['ks_info'] ), ENT_QUOTES ), RB );
+	$pdf->Cell ( 0, 6, utf8_decode(html_entity_decode($data ['ks_info'], ENT_QUOTES)), RB );
 	$pdf->Ln ();
 }
 // $smarty->assign ( "monate", $monate );
 // $smarty->assign ( "tage", $tage );
-$sm = strftime( '%b%y', mktime ( 0, 0, 0, $n, 1, $Y ) );
-$em = strftime( '%b%y', mktime ( 0, 0, 0, $n + 5, 1, $Y ) );
+$sm = strftime ( '%b%y', mktime ( 0, 0, 0, $n, 1, $Y ) );
+$em = strftime ( '%b%y', mktime ( 0, 0, 0, $n + 5, 1, $Y ) );
 $pdf->Output ( "KSK_$sm-$em", I );
 $seite = "auswertung";
 include ('auswertung.php');
