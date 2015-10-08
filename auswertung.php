@@ -26,7 +26,7 @@ do {
 	$sme [$monat] = utf8_encode ( strftime ( '%B %Y', $monat ) );
 	$s1 ++;
 } while ( mktime ( 0, 0, 0, date ( 'm', $ekt ) + $s1 + 5, 1, date ( 'Y', $ekt ) ) < $lkt );
-$sme = array_reverse ( $sme );
+$sme = array_reverse ( $sme, true );
 $smarty->assign ( 'sme', $sme );
 $meditage = meditage ( time () );
 $smarty->assign ( 'meditage', $meditage );
