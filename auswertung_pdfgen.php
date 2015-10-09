@@ -1,5 +1,6 @@
 <?php
 $startmonat = GetParam ( 'startmonat', 'P', mktime ( 0, 0, 0 ) );
+$showinfo = GetParam ( 'info', 'P', 0 );
 $n = date ( 'n', $startmonat );
 $Y = date ( 'Y', $startmonat );
 require './include/fpdf/fpdf.php';
@@ -110,7 +111,7 @@ for($t = 1; $t < 32; $t ++) {
 for($m = $n; $m < $n + 6; $m ++) {
 	$pdf->Cell ( 6, 5, 'Se.', 1, 0, C, $m % 2 );
 	$pdf->Cell ( 9, 5, $sek [$m], 1, 0, C, $m % 2 );
-	$pdf->Cell ( 16, 5, $sem[$m], 1, 0, C, $m % 2 );
+	$pdf->Cell ( 16, 5, $sem [$m], 1, 0, C, $m % 2 );
 	$pdf->Cell ( 15, 5, '', 1, 0, C, $m % 2 );
 }
 $pdf->Ln ();
@@ -120,28 +121,27 @@ if (is_array ( $legende )) {
 	}
 }
 $pdf->Cell ( 0, 8, substr ( $legende_text, 0, - 2 ), 0, 0, C );
-
-// Programmcode für die zu den Kopfschmerztagen gespeicherten Informationen
-// $pdf->Ln ();
-// $pdf->SetLeftMargin ( 15 );
-// $pdf->SetTopMargin ( 15 );
-// $pdf->SetFont ( 'Arial', 'B', 14 );
-// $pdf->AddPage ( 'P' );
-// $pdf->Cell ( 0, 10, 'Weitere Eintragungen zu den umseitigen Kopfschmerztagen' );
-// $pdf->Ln ();
-// $pdf->SetFont ( 'Arial', 'B', 12 );
-// $pdf->Cell ( 30, 6, 'Datum', RB );
-// $pdf->Cell ( 0, 6, 'Information / Bemerkung', RB );
-// $pdf->Ln ();
-// $pdf->SetFont ( 'Arial', '', 12 );
-// foreach ( $tage as $tag => $data ) {
-// if ($data ['ks_info'] == "")
-// continue;
-// $pdf->Cell ( 30, 6, date ( 'd.m.Y', $tag ), RB );
-// $pdf->Cell ( 0, 6, utf8_decode(html_entity_decode($data ['ks_info'], ENT_QUOTES)), RB );
-// $pdf->Ln ();
-// }
-
+if ($showinfo) {
+	// $pdf->Ln ();
+	$pdf->SetLeftMargin ( 15 );
+	$pdf->SetTopMargin ( 15 );
+	$pdf->SetFont ( 'Arial', 'B', 14 );
+	$pdf->AddPage ( 'P' );
+	$pdf->Cell ( 0, 10, 'Weitere Eintragungen zu den umseitigen Kopfschmerztagen' );
+	$pdf->Ln ();
+	$pdf->SetFont ( 'Arial', 'B', 12 );
+	$pdf->Cell ( 30, 6, 'Datum', RB );
+	$pdf->Cell ( 0, 6, 'Information / Bemerkung', RB );
+	$pdf->Ln ();
+	$pdf->SetFont ( 'Arial', '', 12 );
+	foreach ( $tage as $tag => $data ) {
+		if ($data ['ks_info'] == "")
+			continue;
+		$pdf->Cell ( 30, 6, date ( 'd.m.Y', $tag ), RB );
+		$pdf->Cell ( 0, 6, utf8_decode ( html_entity_decode ( $data ['ks_info'], ENT_QUOTES ) ), RB );
+		$pdf->Ln ();
+	}
+}
 $sm = strftime ( '%b%y', mktime ( 0, 0, 0, $n, 1, $Y ) );
 $em = strftime ( '%b%y', mktime ( 0, 0, 0, $n + 5, 1, $Y ) );
 $pdf->Output ( "KSK_$sm-$em.pdf", I );

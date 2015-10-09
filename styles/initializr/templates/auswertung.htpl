@@ -8,6 +8,7 @@ Zulässiger Zeitraum zwischen {$ekt|date_format:'%B %Y'|utf8_encode} bis {$lkt|d
 </header>
 <section>
 <form action="index.php?seite=auswertung_pdfgen" method="POST" target="_BLANK">
-<p>Auswertung ab {html_options name=startmonat options=$sme selected=$customer_id} <input type="submit" value="anzeigen">
+<p>Auswertung ab {html_options name=startmonat options=$sme selected=$customer_id} <input type="submit" value="anzeigen"><br>
+<input type="checkbox" value="1" name="info"> Informationen/Bemerkungen mit anzeigen</p> 
 </form>
 </section>

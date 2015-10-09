@@ -4,7 +4,6 @@
  * 
  * * Einstellungen:
  *   - variabel machen für Kopfschmerz-/Schmerzmitteltage in Seitenbanner
- *   - Zusätzliche Seite in PDF-Auswertung
  * 
  */
 session_start();
@@ -22,7 +21,7 @@ if(!file_exists("config.php")) {
 }
 require("config.php");
 
-$footer_text = "Kopfschmerzkalender 1.2.3 &bull; &copy; 2014-2015 Lars Bleckwenn";
+$footer_text = "Kopfschmerzkalender 1.2.4 &bull; &copy; 2014-2015 Lars Bleckwenn";
 
 $stkstage = $table_prefix."kstage";
 $stmedtag = $table_prefix."medtage";
