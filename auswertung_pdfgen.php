@@ -72,38 +72,38 @@ $pdf->Ln ();
 $pdf->SetFillColor ( 229, 233, 240 );
 for($t = 1; $t < 32; $t ++) {
 	for($m = $n; $m < $n + 6; $m ++) {
-		// 'IF' auskommentiert, da alle Monate 31 Tage haben sollen
-		// if ($t > date ( 't', mktime ( 0, 0, 0, $m, 1, $Y ) )) {
-		// $pdf->Cell ( 46, $height, '', ($m == $n) ? 0 : L );
-		// } else {
-		$pdf->Cell ( 6, $height, $t, 1, 0, R, $m % 2 );
-		$ks_day = mktime ( 0, 0, 0, $m, $t, $Y );
-		if (isset ( $tage [$ks_day] )) {
-			$ks_data = $tage [$ks_day];
-			if (sizeof ( $ks_data ['ks_art'] ) > 0)
-				$sek [$m] ++;
-			$pdf->Cell ( 3, $height, in_array ( 'm', $ks_data ['ks_art'] ) ? 'X' : '', 1, 0, C, $m % 2 );
-			$pdf->Cell ( 3, $height, in_array ( 's', $ks_data ['ks_art'] ) ? 'X' : '', 1, 0, C, $m % 2 );
-			$pdf->Cell ( 3, $height, in_array ( 'u', $ks_data ['ks_art'] ) ? 'X' : '', 1, 0, C, $m % 2 );
-			$mediliste = '';
-			if (sizeof ( $ks_data ['ks_medis'] ) > 0)
-				$sem [$m] ++;
-			foreach ( $ks_data ['ks_medis'] as $medi ) {
-				$medi_name_kurz = kurzname ( $medikamente, $medi );
-				$mediliste .= $medi_name_kurz . ', ';
-				$legende [$medi_name_kurz] = $medikamente [$medi];
-			}
-			$pdf->Cell ( 16, $height, substr ( $mediliste, 0, - 2 ), 1, 0, L, $m % 2 );
-			for($g = 0; $g < 5; $g ++)
-				$pdf->Cell ( 3, $height, ($ks_data ['ks_grad'] == $g) ? 'X' : '', 1, 0, C, $m % 2 );
+		if ($t > date ( 't', mktime ( 0, 0, 0, $m, 1, $Y ) )) {
+			// $pdf->Cell ( 46, $height, '', ($m == $n) ? 0 : L ); //ursprünglich, ohne Summenzeile, sollte der Bereich unter den Monaten mit weniger als 31 Tagen leer sein.
+			$pdf->Cell ( 46, $height, '', 1, 0, C, $m % 2 );
 		} else {
-			$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
-			$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
-			$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
-			$pdf->Cell ( 16, $height, '', 1, 0, L, $m % 2 );
-			for($g = 0; $g < 5; $g ++)
+			$pdf->Cell ( 6, $height, $t, 1, 0, R, $m % 2 );
+			$ks_day = mktime ( 0, 0, 0, $m, $t, $Y );
+			if (isset ( $tage [$ks_day] )) {
+				$ks_data = $tage [$ks_day];
+				if (sizeof ( $ks_data ['ks_art'] ) > 0)
+					$sek [$m] ++;
+				$pdf->Cell ( 3, $height, in_array ( 'm', $ks_data ['ks_art'] ) ? 'X' : '', 1, 0, C, $m % 2 );
+				$pdf->Cell ( 3, $height, in_array ( 's', $ks_data ['ks_art'] ) ? 'X' : '', 1, 0, C, $m % 2 );
+				$pdf->Cell ( 3, $height, in_array ( 'u', $ks_data ['ks_art'] ) ? 'X' : '', 1, 0, C, $m % 2 );
+				$mediliste = '';
+				if (sizeof ( $ks_data ['ks_medis'] ) > 0)
+					$sem [$m] ++;
+				foreach ( $ks_data ['ks_medis'] as $medi ) {
+					$medi_name_kurz = kurzname ( $medikamente, $medi );
+					$mediliste .= $medi_name_kurz . ', ';
+					$legende [$medi_name_kurz] = $medikamente [$medi];
+				}
+				$pdf->Cell ( 16, $height, substr ( $mediliste, 0, - 2 ), 1, 0, L, $m % 2 );
+				for($g = 0; $g < 5; $g ++)
+					$pdf->Cell ( 3, $height, ($ks_data ['ks_grad'] == $g) ? 'X' : '', 1, 0, C, $m % 2 );
+			} else {
 				$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
-			// }
+				$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
+				$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
+				$pdf->Cell ( 16, $height, '', 1, 0, L, $m % 2 );
+				for($g = 0; $g < 5; $g ++)
+					$pdf->Cell ( 3, $height, '', 1, 0, L, $m % 2 );
+			}
 		}
 	}
 	$pdf->Ln ();
