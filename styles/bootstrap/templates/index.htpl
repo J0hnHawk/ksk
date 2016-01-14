@@ -6,7 +6,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{#PfadCSS#}bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{#PfadJS#}bootstrap.min.js"></script>
 <link rel="icon" href="{#PfadIMG#}favicon.ico">
 <script src="{#PfadJS#}main.js"></script>
@@ -16,8 +17,10 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">Kopfschmerzkalender</a>
 			</div>
@@ -46,14 +49,16 @@
 					<!-- 
 					<li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span> Registrieren</a></li>
 					-->
-					<li><a href="index.php?seite=logout"><span class="glyphicon glyphicon-log-out"></span> Abmelden</a></li>
+					<li><a href="index.php?seite=logout"><span
+							class="glyphicon glyphicon-log-out"></span> Abmelden</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
 	<div class="container">
-		{assign var="datei" value="./styles/$style/templates/$seite.htpl"} {if file_exists($datei)} {include file="$seite.htpl"} {else}
+		{assign var="datei" value="./styles/$style/templates/$seite.htpl"} {if
+		file_exists($datei)} {include file="$seite.htpl"} {else}
 		<h1>Fehler!</h1>
 		<p>Die Datei "{$datei}" existiert nicht.</p>
 		{debug} {/if}

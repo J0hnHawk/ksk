@@ -1,15 +1,24 @@
 jQuery(document).ready(function() {
 	if(!warning) jQuery('#kstage').hide();
+	//jQuery('#options').hide();
 });
 jQuery(document).ready(function() {
 	
-	jQuery('#toggle').click(function() {
-		if($('#toggle').html() == 'Kopfschmerztage anzeigen') {
+	jQuery('#toggle1').click(function() {
+		if($('#toggle1').html() == 'Kopfschmerztage anzeigen') {
 			jQuery('#kstage').fadeIn('slow');
-			$('#toggle').html('Kopfschmerztage ausblenden');
+			$('#toggle1').html('Kopfschmerztage ausblenden');
 		} else {
 			jQuery('#kstage').fadeOut('slow');
-			$('#toggle').html('Kopfschmerztage anzeigen');
+			$('#toggle1').html('Kopfschmerztage anzeigen');
+		}
+		
+	});
+	jQuery('#toggle2').click(function() {
+		if($('#options').is(":visible") == false) {
+			jQuery('#options').fadeIn('slow');
+		} else {
+			jQuery('#options').fadeOut('slow');
 		}
 		
 	});

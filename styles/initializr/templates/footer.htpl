@@ -1,13 +1,12 @@
 
-        <div class="footer-container">
-            <footer class="wrapper">
-                {$footer_text}
-            </footer>
-        </div>
+<div class="footer-container">
+	<footer class="wrapper"> {$footer_text} </footer>
+</div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{#PfadJS#}vendor/jquery-1.11.0.min.js"><\/script>')</script>
-		<script>var warning = {$warning}</script>
-        <script src="{#PfadJS#}main.js"></script>
-    </body>
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{#PfadJS#}vendor/jquery-1.11.0.min.js"><\/script>')</script>
+<script>var warning = {$warning}</script>
+<script src="{#PfadJS#}main.js?{$smarty.now}"></script>
+</body>
 </html>

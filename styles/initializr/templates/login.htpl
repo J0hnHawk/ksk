@@ -3,6 +3,7 @@
 <p>Der eingegebene Benutzername oder das Passwort ist nicht korrekt.
 </p>
 {/if}
+<h1>Anmeldung</h1>
 <form action="?seite=login" method="post">
 	<p>
 	<table>
@@ -12,8 +13,7 @@
 		</tr>
 		<tr>
 			<td>Passwort:</td>
-			<td><input name="user_pass" type="password">
-			</td>
+			<td><input name="user_pass" type="password"></td>
 		</tr>
 		<tr>
 			<td colspan="2"><input type="checkbox" name="autologin">

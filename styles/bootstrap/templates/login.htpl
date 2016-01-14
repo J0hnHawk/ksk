@@ -4,8 +4,6 @@
 {/if}
 <form action="?seite=login" method="post">
 	<p>
-	
-	
 	<table>
 		<tr>
 			<td>Username:</td>
@@ -16,7 +14,8 @@
 			<td><input name="user_pass" type="password"></td>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="checkbox" name="autologin"> zukünftig automatisch einloggen</td>
+			<td colspan="2"><input type="checkbox" name="autologin">
+				zukünftig automatisch einloggen</td>
 		</tr>
 		<tr>
 			<td colspan="2" style="text-align: right;"><input type="submit"></td>

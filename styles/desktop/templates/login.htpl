@@ -1,8 +1,7 @@
 {if $error}
-	<h3>Fehler!</h3>
-	<p>
-		Der eingegebene Benutzername oder das Passwort ist nicht korrekt.
-	</p>
+<h3>Fehler!</h3>
+<p>Der eingegebene Benutzername oder das Passwort ist nicht korrekt.
+</p>
 {/if}
 <form action="?seite=login" method="post">
 	<p>
