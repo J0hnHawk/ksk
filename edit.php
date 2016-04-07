@@ -5,7 +5,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 	$tag = GetParam ( 'datum' );
 	if ($tag == '')
 		$fehler .= 'Es wurde kein Datum eingegeben.<br>';
-	elseif (! check_date ( $tag, "Ymd", "-" )) 
+	elseif (! check_date ( $tag, "Ymd", "-" ))
 		$fehler .= "Es wurde ein ungültiges Datum eingegeben ($tag).<br>";
 		// Welches Formular wurde abgeschickt
 	$action = GetParam ( 'forumlar', 'P', 'speichern' );
@@ -31,7 +31,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 				for($s1 = 0; $s1 < 5; $s1 ++)
 					$grad [$s1] = $s1;
 				$smarty->assign ( "grad", $grad );
-				//list ( $d, $m, $y ) = explode ( '.', $tag );
+				// list ( $d, $m, $y ) = explode ( '.', $tag );
 				list ( $y, $m, $d ) = explode ( '-', $tag );
 				$ks_day = mktime ( 0, 0, 0, $m, $d, $y );
 				$smarty->assign ( 'ks_day', $ks_day );
@@ -74,7 +74,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 				else {
 					// **** Daten zusammenstellen
 					// * 2. KS-Tag als Unixtimestamp
-					//list ( $d, $m, $y ) = explode ( '.', $tag );
+					// list ( $d, $m, $y ) = explode ( '.', $tag );
 					list ( $y, $m, $d ) = explode ( '-', $tag );
 					$ks_day = mktime ( 0, 0, 0, $m, $d, $y );
 					// * 3. KS-Art(en) als String
