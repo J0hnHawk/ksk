@@ -21,7 +21,7 @@ if(!file_exists("config.php")) {
 }
 require("config.php");
 
-$footer_text = "Kopfschmerzkalender 1.2.5 &bull; &copy; 2014-2015 Lars Bleckwenn";
+$footer_text = "Kopfschmerzkalender 1.2.6 &bull; &copy; 2014-2016 Lars Bleckwenn";
 
 $stkstage = $table_prefix."kstage";
 $stmedtag = $table_prefix."medtage";
@@ -33,7 +33,7 @@ require("include/smarty/Smarty.class.php");
 require("include/Login.class.php");
 
 //Manage Styles
-$styles = array('initializr', 'desktop', 'mobil', 'bootstrap');
+$styles = array('initializr', 'bootstrap');
 if(isset($_COOKIE['style']) && in_array($_COOKIE['style'], $styles)) {
 	$style = $_COOKIE['style'];
 } else {
@@ -41,7 +41,7 @@ if(isset($_COOKIE['style']) && in_array($_COOKIE['style'], $styles)) {
 }
 
 //Manage Seiten
-$seiten = array('edit', 'monat', 'kalender', 'login', 'logout', 'auswertung', 'auswertung_pdfgen'); //  , 'import'
+$seiten = array('edit', 'monat', 'options', 'kalender', 'login', 'logout', 'auswertung', 'auswertung_pdfgen'); 
 $seite = GetParam('seite','G',$seiten[0]);
 $login = new loginCheck($sqldb, $table_prefix);
 if(!$login->check_access(session_id())) $seite = 'login';
@@ -59,10 +59,16 @@ $smarty->debugging = false;
 $smarty->compile_dir = 'compile/';
 $smarty->config_dir = "styles/".$style;
 $smarty->template_dir = "styles/".$style."/templates/";
-if($seite != 'logout') include("$seite.php");
-$smarty->assign("seite", $seite);
-$smarty->assign("style", $style);
-$smarty->assign("footer_text", $footer_text);
-$smarty->display('index.htpl',$style,$style);
-
+if ($seite != 'logout')
+	include ("$seite.php");
+$meditage = meditage ( $aside_date );
+$smarty->assign ( 'meditage', $meditage );
+if ($meditage ['meditage'] > 8 || $seite == 'monat')
+	$smarty->assign ( 'warning', 1 );
+else
+	$smarty->assign ( 'warning', 0 );
+$smarty->assign ( "seite", $seite );
+$smarty->assign ( "style", $style );
+$smarty->assign ( "footer_text", $footer_text );
+$smarty->display ( 'index.htpl', $style, $style );
 ?>
