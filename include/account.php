@@ -1,18 +1,4 @@
 <?php
-/**
- * 
- * @todo case 'edit': Die POST Variabeln müssen noch überprüft werden
- * @todo Registrierungs- und Passwortwiederherstellungsprozess funktioniert noch nicht
- * 
- * http://www.html-seminar.de/html-css-php-forum/board40-themenbereiche/board18-php/4634-einfache-datenbankklasse-erstellen/
- * https://www.php-einfach.de/experte/php-codebeispiele/loginscript/
- * https://www.php-einfach.de/experte/php-sicherheit/sql-injections/
- * https://www.php-einfach.de/mysql-tutorial/php-prepared-statements/
- * http://code.tutsplus.com/tutorials/how-to-implement-email-verification-for-new-members--net-3824
- * http://www.mywebsolution.de/workshops/2/page_2/show_PHP-Loginsystem-User-registrieren.html
- * 
- */
-require ("./include/notice.php");
 $mode = GetParam ( 'mode', 'G', '' );
 $modes = array (
 		'splash',
@@ -26,7 +12,6 @@ $modes = array (
 if (! in_array ( $mode, $modes ) || ! isset ( $_SESSION ['user'] ) && $mode != 'login' && $mode != 'register' && $mode != 'password')
 	$mode = 'splash';
 $smarty->assign ( 'mode', $mode );
-$error = '';
 switch ($mode) {
 	case 'splash' :
 		$_SESSION = array ();
@@ -48,26 +33,9 @@ switch ($mode) {
 	case 'login' :
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$user_name = GetParam ( 'inputUser' );
-			if (is_array ( $user_name )) {
-				$error .= get_message ( 'F26' );
-			} elseif ($user_name == '') {
-				$error .= get_message ( 'F25' );
-			}
 			$user_pass = GetParam ( 'inputPassword' );
-			if (is_array ( $user_pass )) {
-				$error .= get_message ( 'F27' );
-			} elseif ($user_pass == '') {
-				$error .= get_message ( 'F28' );
-			}
 			$autologin = GetParam ( 'checkboxAutologin' );
-			if (is_array ( $autologin )) {
-				$error .= get_message ( 'F29' );
-			}
-			if (! $error) {
-				$success = $login->login ( $user_name, $user_pass, session_id () );
-				if (! $success)
-					$error .= "Der Benutzername oder das Passwort ist falsch!";
-			}
+			$success = $login->login ( $user_name, $user_pass, session_id () );
 			if ($success) {
 				if ($autologin == 'on') {
 					setcookie ( 'ksk_user', $user_name, time () + (60 * 60 * 24 * 31) );
@@ -83,84 +51,48 @@ switch ($mode) {
 			} else {
 				$smarty->assign ( 'show_login', 'show' );
 				$smarty->assign ( 'splash_message', '<h2>Kopfschmerzkalender<br><small>Bitte melde dich an.</small></h2>' );
-				$smarty->assign ( 'login_failure', "<strong>Fehler!</strong> $error" );
+				$smarty->assign ( 'login_failure', '<strong>Fehler!</strong> Der Benutzername oder das Passwort ist falsch!' );
 				$template = "splash.htpl";
 			}
 		}
 		break;
 	case 'password' :
-		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-			$smarty->assign ( 'show_login', 'hide' );
-			$template = "splash.htpl";
-			$email = GetParam ( 'inputEmail' );
-			if (filter_var ( $email, FILTER_VALIDATE_EMAIL )) {
-				$format = "SELECT * FROM $db_users WHERE user_email = '%s';";
-				$sql = sprintf ( $format, $email );
-				$result = $sqldb->query ( $sql );
-				if ($result->num_rows == 1) {
-					$user = $result->fetch_assoc ();
-					$empfaenger = $email;
-					$betreff = "Neues Passwort für den Kopfschmerzkalender";
-					$from = "From: KSK-Admin <admin@ksk.bleckwenn.net>\n";
-					$from .= "Reply-To: admin@ksk.bleckwenn.net\n";
-					$from .= "Content-Type: text/html\n";
-					$format = '<p>Hallo %s!</p><p>Jemand hat kürzlich darum gebeten, dein Passwort für den Kopfschmerzkalender zurückzusetzen.</p><p><a href="%s">Klicke hier, um dein Passwort zu ändern.</a></p><p><b>Du hast diese Änderung nicht beantragt?</b><br>Falls du kein neues Passwort beantragt hast, <a href="%s">teile uns das umgehend mit.</a></p>';
-					$text = sprintf ( $format, $user ['user_name'], md5 ( time () ), '#' );
-					if (mail ( $empfaenger, $betreff, $text, $from )) {
-						$splash_message = "<h1>E-Mail versandt&hellip;</h1><p>An die E-Mail-Adresse</p><blockquote><p>$email</p></blockquote><p>wurde eine E-Mail versandt. Bitte folge den Anweisungen in der E-Mail.</p>";
-					} else {
-						$splash_message = "<h1>E-Mail nicht versandt&hellip;</h1><p>Beim Versand an die E-Mail-Adresse</p><blockquote><p>$email</p></blockquote><p>traten Probleme auf. Bitte versuche es später noch einmal.</p>";
-					}
+		// if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+		$smarty->assign ( 'show_login', 'hide' );
+		$template = "splash.htpl";
+		$email = GetParam ( 'inputEmail' );
+		if (filter_var ( $email, FILTER_VALIDATE_EMAIL )) {
+			$format = "SELECT * FROM $db_users WHERE user_email = '%s';";
+			$sql = sprintf ( $format, $email );
+			$result = $sqldb->query ( $sql );
+			if ($result->num_rows == 1) {
+				$user = $result->fetch_assoc ();
+				$empfaenger = $email;
+				$betreff = "Neues Passwort für den Kopfschmerzkalender";
+				$from = "From: KSK-Admin <admin@ksk.bleckwenn.net>\n";
+				$from .= "Reply-To: admin@ksk.bleckwenn.net\n";
+				$from .= "Content-Type: text/html\n";
+				$format = '<p>Hallo %s!</p><p>Jemand hat kürzlich darum gebeten, dein Passwort für den Kopfschmerzkalender zurückzusetzen.</p><p><a href="%s">Klicke hier, um dein Passwort zu ändern.</a></p><p><b>Du hast diese Änderung nicht beantragt?</b><br>Falls du kein neues Passwort beantragt hast, <a href="%s">teile uns das umgehend mit.</a></p>';
+				$text = sprintf ( $format, $user ['user_name'], md5 ( time () ), '#' );
+				if (mail ( $empfaenger, $betreff, $text, $from )) {
+					$splash_message = "<h1>E-Mail versandt&hellip;</h1><p>An die E-Mail-Adresse</p><blockquote><p>$email</p></blockquote><p>wurde eine E-Mail versandt. Bitte folge den Anweisungen in der E-Mail.</p>";
 				} else {
-					$splash_message = "<h1>E-Maifl existiert nicht&hellip;</h1><p>Die E-Mail-Adresse</p><blockquote><p>$email</p></blockquote><p>ist in keinem Benutzerkonto hinterlegt.</p>";
+					$splash_message = "<h1>E-Mail nicht versandt&hellip;</h1><p>Beim Versand an die E-Mail-Adresse</p><blockquote><p>$email</p></blockquote><p>traten Probleme auf. Bitte versuche es später noch einmal.</p>";
 				}
 			} else {
-				$splash_message = "<h1>E-Mail-Adresse ungültig</h1><p>Die eingegebene E-Mail-Adresse ist ungültig. Bitte versuche es erneut.</p>";
+				$splash_message = "<h1>E-Mail existiert nicht&hellip;</h1><p>Die E-Mail-Adresse</p><blockquote><p>$email</p></blockquote><p>ist in keinem Benutzerkonto hinterlegt.</p>";
 			}
-			$smarty->assign ( 'splash_message', $splash_message );
 		} else {
-			$smarty->assign ( 'show_login', 'show' );
-			$smarty->assign ( 'splash_message', '<h2>Kopfschmerzkalender<br><small>Bitte melde dich an.</small></h2>' );
-			$template = "splash.htpl";
+			$splash_message = "<h1>E-Mail-Adresse ungültig</h1><p>Die eingegebene E-Mail-Adresse ist ungültig. Bitte versuche es erneut.</p>";
 		}
+		$smarty->assign ( 'splash_message', $splash_message );
+		// }
 		break;
 	case 'register' :
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-			$inputUser = GetParam ( 'inputUser' );
-			if (is_array ( $inputUser ) || empty ( trim ( $inputUser ) )) {
-				$error .= get_message ( 'F30' );
-			} elseif (! preg_match ( '/^\w+$/', trim ( $inputUser ) )) {
-				$error .= get_message ( 'F34' );
-			} else {
-				$inputUser = mysql_real_escape_string ( trim ( $inputUser ) );
-			}
-			$inputEmail = GetParam ( 'inputEmail' );
-			if (is_array ( $inputEmail ) || empty ( $inputEmail ) || ! filter_var ( $inputEmail, FILTER_VALIDATE_EMAIL )) {
-				$error .= get_message ( 'F31' );
-			} else {
-				$inputEmail = mysql_real_escape_string ( trim ( $inputEmail ) );
-				$sql = sprintf ( 'SELECT * FROM %s WHERE user_email = "%s"', $db_users, $inputEmail );
-				$result = $sqldb->query ( $sql );
-				if ($result->num_rows > 0) {
-					$error .= get_message ( 'F33' );
-				}
-			}
-			$inputPassword = GetParam ( 'inputPassword' );
-			if (is_array ( $inputPassword ) || strlen ( trim ( $inputPassword ) ) < 8) {
-				$error .= get_message ( 'F32' );
-			} else {
-				$inputPassword = password_hash ( mysql_real_escape_string ( trim ( $inputPassword ) ), PASSWORD_DEFAULT );
-			}
-			if (! $error) {
-				$format = 'INSERT INTO %s (user_name, user_email,user_password) VALUES ("%s", "%s", "%s")';
-				$sql = sprintf($format, $db_users, $inputUser, $inputEmail, $inputPassword);
-				if (! $result = $sqldb->query ( $sql )) {
-					dbstat($result, $sql);
-				}
-			}
+			
 			$smarty->assign ( 'show_login', 'hide' );
-			//$smarty->assign ( 'splash_message', '<h1>Fast geschafft...</h1><p>Zum Abschluss der Registrierung wurde eine E-Mail an folgende Adresse versandt:</p><blockquote><p>test@test.test</p></blockquote><p>Bitte rufe die in der E-Mail angegebene Adresse in deinem Browser auf.</p>' );
-			$smarty->assign ( 'splash_message', '<h1>'.$error.'</h1>' );
+			$smarty->assign ( 'splash_message', '<h1>Fast geschafft...</h1><p>Zum Abschluss der Registrierung wurde eine E-Mail an folgende Adresse versandt:</p><blockquote><p>test@test.test</p></blockquote><p>Bitte rufe die in der E-Mail angegebene Adresse in deinem Browser auf.</p>' );
 			$template = "splash.htpl";
 		}
 		break;
@@ -214,7 +146,7 @@ switch ($mode) {
 			}
 			$smarty->assign ( 'message', $message );
 		}
-		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $db_users, 'user_id', $_SESSION ['user'] ['user_id'] );
+		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $db_users,  'user_id', $_SESSION ['user'] ['user_id'] );
 		$result = $sqldb->query ( $sql );
 		if ($result->num_rows == 1)
 			$user = $result->fetch_assoc ();

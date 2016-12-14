@@ -155,8 +155,7 @@
 <div id="pdfreport" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<!--  <form method="post" action="index.php?page=report&mode={$mode}{if isset($amonat)}&month={$amonat|date_format:'m'}&year={$amonat|date_format:'Y'}{/if}" target="_BLANK"> -->
-			<form method="post" action="index.php?page=report_pdf" target="_BLANK">
+			<form method="post" action="index.php?page=profile&mode=login">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Auswertung über 6 Monate</h4>
@@ -172,7 +171,7 @@
 							<label for="inputExtraInfo" class="col-sm-4 control-label">Zusätzlich</label>
 							<div class="col-sm-8">
 								<div class="checkbox">
-									<label><input type="checkbox" value="1" name="info">Informationen / Bemerkungen ausgeben</label>
+									<label><input type="checkbox" value="" name="">Informationen / Bemerkungen ausgeben</label>
 								</div>
 							</div>
 					</fieldset>
