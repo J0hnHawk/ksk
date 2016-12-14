@@ -37,11 +37,13 @@ class loginCheck {
 		$result = $this->sqldb->query ( $sql );
 		
 		if ($result->num_rows == 1) {
-			extract ( $result->fetch_assoc () );
-			if ($user_password == $this->pass) {
-				$_SESSION ['user_id'] = $user_id;
-				$_SESSION ['user'] = $user_name;
-				$sql = sprintf ( "UPDATE %s SET %s = '%s', %s = '%s' WHERE user_id = '%s';", $this->prefi . "user", 'user_sessionid', $this->sessid, 'user_lastvisit', time (), $user_id );
+			$user = $result->fetch_assoc ();
+			if ($user ['user_password'] == $this->pass) {
+				list ( $range1, $range2 ) = explode ( ',', $user ['user_autowarn'] );
+				$user ['range1'] = $range1;
+				$user ['range2'] = $range2;
+				$_SESSION ['user'] = $user;
+				$sql = sprintf ( "UPDATE %s SET %s = '%s', %s = '%s' WHERE user_id = '%s';", $this->prefi . "user", 'user_sessionid', $this->sessid, 'user_lastvisit', time (), $user ['user_id'] );
 				$result = $this->sqldb->query ( $sql );
 				return true;
 			} else {
@@ -66,7 +68,7 @@ class loginCheck {
 		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $this->prefi . "user", 'user_sessionid', $this->sessid );
 		$result = $this->sqldb->query ( $sql );
 		if ($result->num_rows == 1) {
-			unset ( $_SESSION ['user_id'] );
+			unset ( $_SESSION ['user'] );
 			$sql = sprintf ( "UPDATE %s SET %s = '' WHERE %s = '%s';", $this->prefi . "user", 'user_sessionid', 'user_sessionid', $this->sessid );
 			$result = $this->sqldb->query ( $sql );
 			return true;
@@ -88,6 +90,12 @@ class loginCheck {
 		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $this->prefi . "user", 'user_sessionid', $this->sessid );
 		$result = $this->sqldb->query ( $sql );
 		if ($result->num_rows == 1) {
+			$user = $result->fetch_assoc ();
+			// list führt zu notice wenn kein 2. argument vorhanden ist
+			list ( $range1, $range2 ) = explode ( ',', $user ['user_autowarn'] );
+			$user ['range1'] = $range1;
+			$user ['range2'] = $range2;
+			$_SESSION ['user'] = $user;
 			return true;
 		} else {
 			// Session nicht eingeloggt

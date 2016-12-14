@@ -1,0 +1,66 @@
+/* Allgemein mit Fixed-Footer */
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	padding-top: 70px;
+	margin-bottom: 60px;
+}
+
+footer {
+	background-color: rgb(221, 72, 20);
+	color: white;
+	padding: 15px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+}
+
+/* Monatsübersichten */
+.calendar>tbody>tr>td {
+	font-size: 90%;
+	padding: 3px;
+}
+
+.weekday, .weekend, .othermonth {
+	color: #000000;
+	font-size: 150%;
+	text-align: right;
+}
+
+.othermonth {
+	color: #808080;
+}
+
+.weekend {
+	color: #ff0000;
+}
+
+.weekendlist1 {
+	color: #ff0000;
+}
+
+.weekendlist2 {
+	background-color: rgb(221, 72, 20);
+	color: white;
+}
+
+/* Für die Profilseite */
+#inputRangeSlider .slider-track-high {
+	background: red;
+}
+
+#inputRangeSlider .slider-track-low {
+	background: green;
+}
+
+#inputRangeSlider .slider-selection {
+	background: yellow;
+}
