@@ -1,4 +1,7 @@
 <?php
+if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+	include("report_pdf.php");
+}
 $mode = GetParam ( 'mode', 'G', '' );
 $modes = array (
 		'sheet',

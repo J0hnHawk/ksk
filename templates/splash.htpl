@@ -104,19 +104,19 @@ body {
 						<div class="form-group">
 							<label for="inputUser" class="col-sm-3 control-label">Benutzername</label>
 							<div class="col-sm-9">
-								<input class="form-control" id="inputUser" placeholder="Benutzername" type="text" required>
+								<input class="form-control" id="inputUser" name="inputUser" placeholder="Benutzername" type="text" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail" class="col-sm-3 control-label">E-Mail</label>
 							<div class="col-sm-9">
-								<input class="form-control" id="inputEmail" placeholder="E-Mail" type="email" required>
+								<input class="form-control" id="inputEmail" name="inputEmail" placeholder="E-Mail" type="email" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword" class="col-sm-3 control-label">Passwort</label>
 							<div class="col-sm-9">
-								<input class="form-control" id="inputPassword" placeholder="Passwort" type="password" required>
+								<input class="form-control" id="inputPassword" name="inputPassword" placeholder="Passwort" type="password" required>
 							</div>
 						</div>
 					</fieldset>

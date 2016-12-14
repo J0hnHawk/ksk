@@ -29,6 +29,16 @@ function messages() {
 			'F22' => 'Bei der Parameterübergabe wurden unregelmäßigkeiten festgestellt.',
 			'F23' => 'Das zu löschende Medikament existiert nicht.',
 			'F24' => 'Bereits eingenommene Medikamente dürfen nicht gelöscht werden.',
+			'F25' => 'Es wurde kein Benutzername eingegeben.',
+			'F26' => 'Bei der Parameterübergabe wurden unregelmäßigkeiten festgestellt.',
+			'F27' => 'Es wurde kein Passwort eingegeben.',
+			'F28' => 'Bei der Parameterübergabe wurden unregelmäßigkeiten festgestellt.',
+			'F29' => 'Bei der Parameterübergabe wurden unregelmäßigkeiten festgestellt.',
+			'F30' => 'Der Benutzername darf nicht leer sein.',
+			'F31' => 'Die eingebene Email-Adresse war ungültig.',
+			'F32' => 'Dein Passwort muss mindestens 8 Zeichen haben.',
+			'F33' => 'Diese E-Mail-Adresse ist bereits vergeben.',
+			'F34' => 'Bitte benutze für den Benutzernamen nur alphanumerische Zeichen (Zahlen, Buchstaben und den Unterstrich).',
 			'H01' => 'Es wurde ein Schmerzgrad angegeben aber keine Schmerzart ausgewählt.',
 			'H02' => 'Schmerzart und Medikamente wurden nicht ausgewählt. Der Tag wird im Kalender besonders gekennzeichnet.' 
 	);

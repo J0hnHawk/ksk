@@ -53,4 +53,4 @@ while ( $kstag = $kstage->fetch_assoc () ) {
 		dbstat ( $medtage, $sql );
 	}
 }
-
+$sql = "UPDATE `ksk2_medtage` SET `user_id` = 1 WHERE `user_id` = 0;";

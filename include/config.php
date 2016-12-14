@@ -7,7 +7,7 @@ if (strncasecmp ( PHP_OS, 'WIN', 3 ) == 0) {
 	$dbname = 'ksk';
 	$dbuser = 'root';
 	$dbpasswd = '';
-	$table_prefix = 'ksk_';
+	$table_prefix = 'ksk2_';
 } else {
 	$dbhost = 'db2586.1und1.de';
 	$dbport = '';
