@@ -95,8 +95,10 @@
 							Schmerztage<span class="hidden-xs"> anzeigen</span>
 						</button>
 						{/if}
-						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteDay" {if !$ks_lastchange}disabled="disabled"{/if}>Löschen</button>
-						<button type="reset" class="btn btn-default">Zurücksetzen</button>
+						{if $ks_lastchange}
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteDay" {if !$ks_lastchange}disabled="disabled"{/if}>Löschen</button>
+							<button type="reset" class="btn btn-default">Zurücksetzen</button>
+						{/if}
 						<button type="submit" class="btn btn-primary">Speichern</button>
 					</div>
 				</div>
