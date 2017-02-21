@@ -1,9 +1,13 @@
 <?php
 function get_message($id, $var = '') {
-	$message = messages ();
+	$messages = messagesArray ();
 	return sprintf ( $message [$id] . " (%s)<br>%s", $id, $var );
 }
-function messages() {
+function getMessage($messageID, $errorCode) {
+	$messages = messagesArray ();
+	return sprintf ( $mesage [$messageID] . " (Errorcode %s)<br>", $errorCode );
+}
+function messagesArray() {
 	return array (
 			'F01' => 'Es wurde kein Datum eingegeben.',
 			'F02' => 'Es wurde kein gültiges Datum eingegeben.',

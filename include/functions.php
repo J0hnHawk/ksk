@@ -22,6 +22,45 @@ function GetParam($ParamName, $Method = "P", $DefaultValue = "") {
 			return $DefaultValue;
 	}
 }
+function checkVars($requestVars) {
+	$errorText = '';
+	foreach ( $requestVars as $varName => $codesAndChecks ) {
+		$varValue = GetParam ( $varName );
+		list ( $messageID, $errorCode, $checks2do ) = explode ( ';', $codesAndChecks );
+		$checks2do = explode ( ',', $checks2do );
+		$error = false;
+		foreach ( $checks2do as $check ) {
+			switch ($check) {
+				case 'noarray' :
+					if (is_array ( $varValue ))
+						$error = true;
+					break;
+				case 'trim' :
+					$varValue = trim ( $varValue );
+					break;
+				case 'notempty' :
+					if ($varValue == '')
+						$error = true;
+					break;
+				case 'mres' :
+					$varValue = mysql_real_escape_string ( $varValue );
+					break;
+				case 'bolean' :
+					$varValue = filter_var ( $varValue, FILTER_VALIDATE_BOOLEAN );
+					break;
+			}
+			if ($error) {
+				$errorText .= getMessage ( $messageID, $errorCode );
+				break 2;
+			}
+		}
+		$requestVars [$varName] = $varValue;
+	}
+	$requestVars += [ 
+			'error' => $errorText 
+	];
+	return $requestVars;
+}
 function check_date($date, $format, $sep) {
 	$pos1 = strpos ( $format, 'd' );
 	$pos2 = strpos ( $format, 'm' );

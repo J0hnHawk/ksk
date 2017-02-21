@@ -1,14 +1,14 @@
 <?php
 // KSK auto-generated configuration file
 // Do not change anything in this file!
-if (strncasecmp ( PHP_OS, 'WIN', 3 ) == 0) {
+//if (strncasecmp ( PHP_OS, 'WIN', 3 ) == 0) {
 	$dbhost = '127.0.0.1';
 	$dbport = '';
 	$dbname = 'db333987688';
 	$dbuser = 'root';
 	$dbpasswd = '';
 	$table_prefix = 'ksk2_';
-} else {
+/* } else {
 	$dbhost = 'db2586.1und1.de';
 	$dbport = '';
 	$dbname = 'db333987688';
@@ -16,4 +16,4 @@ if (strncasecmp ( PHP_OS, 'WIN', 3 ) == 0) {
 	$dbpasswd = 'L@r$:6W!';
 	$table_prefix = 'ksk2_';
 
-}
+} */

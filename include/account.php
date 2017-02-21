@@ -47,22 +47,12 @@ switch ($mode) {
 		break;
 	case 'login' :
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-			$user_name = GetParam ( 'inputUser' );
-			if (is_array ( $user_name )) {
-				$error .= get_message ( 'F26' );
-			} elseif ($user_name == '') {
-				$error .= get_message ( 'F25' );
-			}
-			$user_pass = GetParam ( 'inputPassword' );
-			if (is_array ( $user_pass )) {
-				$error .= get_message ( 'F27' );
-			} elseif ($user_pass == '') {
-				$error .= get_message ( 'F28' );
-			}
-			$autologin = GetParam ( 'checkboxAutologin' );
-			if (is_array ( $autologin )) {
-				$error .= get_message ( 'F29' );
-			}
+			$requestVars = checkVars ( array (
+					'inputUser' => 'F41;8LJGU;noarray,trim,notempty,mysql',
+					'inputPassword' => 'F42;4GHWB;noarray,trim,notempty,msql',
+					'checkboxAutologin' => 'F43;K6NXE;noarray,bolean' 
+			) );
+			list($user_name,$user_pass,$autologin,$error) = $requestVars;
 			if (! $error) {
 				$success = $login->login ( $user_name, $user_pass, session_id () );
 				if (! $success)
@@ -73,12 +63,14 @@ switch ($mode) {
 					setcookie ( 'ksk_user', $user_name, time () + (60 * 60 * 24 * 31) );
 					setcookie ( 'ksk_pass', md5 ( $user_pass ), time () + (60 * 60 * 24 * 31) );
 				}
-				if (strncasecmp ( PHP_OS, 'WIN', 3 ) == 0) {
-					$target = $_SERVER ['REQUEST_SCHEME'] . '://' . $_SERVER ['HTTP_HOST'] . rtrim ( dirname ( $_SERVER ['SCRIPT_NAME'] ), '/' ) . '/index.php?page=edit';
-					header ( 'Location: ' . $target, true, $_SERVER ['SERVER_PROTOCOL'] == 'HTTP/1.1' ? 303 : 302 );
-				} else {
-					header ( 'Location: http://ksk2.bleckwenn.net/index.php?page=edit', true, $_SERVER ['SERVER_PROTOCOL'] == 'HTTP/1.1' ? 303 : 302 );
-				}
+				// if (strncasecmp ( PHP_OS, 'WIN', 3 ) == 0) {
+				$target = $_SERVER ['REQUEST_SCHEME'] . '://' . $_SERVER ['HTTP_HOST'] . rtrim ( dirname ( $_SERVER ['SCRIPT_NAME'] ), '/' ) . '/index.php?page=edit';
+				header ( 'Location: ' . $target, true, $_SERVER ['SERVER_PROTOCOL'] == 'HTTP/1.1' ? 303 : 302 );
+				/*
+				 * } else {
+				 * header ( 'Location: http://ksk2.bleckwenn.net/index.php?page=edit', true, $_SERVER ['SERVER_PROTOCOL'] == 'HTTP/1.1' ? 303 : 302 );
+				 * }
+				 */
 				exit ();
 			} else {
 				$smarty->assign ( 'show_login', 'show' );
@@ -153,75 +145,79 @@ switch ($mode) {
 			}
 			if (! $error) {
 				$format = 'INSERT INTO %s (user_name, user_email,user_password) VALUES ("%s", "%s", "%s")';
-				$sql = sprintf($format, $db_users, $inputUser, $inputEmail, $inputPassword);
+				$sql = sprintf ( $format, $db_users, $inputUser, $inputEmail, $inputPassword );
 				if (! $result = $sqldb->query ( $sql )) {
-					dbstat($result, $sql);
+					dbstat ( $result, $sql );
 				}
 			}
 			$smarty->assign ( 'show_login', 'hide' );
-			//$smarty->assign ( 'splash_message', '<h1>Fast geschafft...</h1><p>Zum Abschluss der Registrierung wurde eine E-Mail an folgende Adresse versandt:</p><blockquote><p>test@test.test</p></blockquote><p>Bitte rufe die in der E-Mail angegebene Adresse in deinem Browser auf.</p>' );
-			$smarty->assign ( 'splash_message', '<h1>'.$error.'</h1>' );
+			// $smarty->assign ( 'splash_message', '<h1>Fast geschafft...</h1><p>Zum Abschluss der Registrierung wurde eine E-Mail an folgende Adresse versandt:</p><blockquote><p>test@test.test</p></blockquote><p>Bitte rufe die in der E-Mail angegebene Adresse in deinem Browser auf.</p>' );
+			$smarty->assign ( 'splash_message', '<h1>' . $error . '</h1>' );
 			$template = "splash.htpl";
 		}
 		break;
 	case 'edit' :
+		$success = true;
+		$message = $update = '';
 		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $db_users, 'user_id', $_SESSION ['user'] ['user_id'] );
 		$result = $sqldb->query ( $sql );
-		if ($result->num_rows == 1)
-			$user = $result->fetch_assoc ();
-		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-			$email1 = GetParam ( 'inputEmail' );
-			$email2 = GetParam ( 'inputEmail2' );
-			$passwd1 = GetParam ( 'inputPassword' );
-			$passwd2 = GetParam ( 'inputPassword2' );
-			$range = GetParam ( 'inputRangeSlider' );
-			$showpain = GetParam ( 'radioShowPain' );
-			$userstyle = GetParam ( 'selectStyle' );
-			$success = true;
-			$message = $update = '';
-			if ($user ['user_email'] != $email1) {
-				if ($email1 != $email2) {
-					$success = false;
-					$message = '<div class="alert alert-danger"><strong>Fehler:</strong> Die E-Mail-Adressen stimmen nicht überein.</div>';
-				} else
-					$update .= "user_email = '$email1', ";
-			}
-			if ($passwd1 != '') {
-				if ($passwd1 != $passwd2) {
-					$success = false;
-					$message .= '<div class="alert alert-danger"><strong>Fehler:</strong> Die Passwörter stimmen nicht überein.</div>';
-				} else
-					$update .= "user_password = '" . md5 ( $passwd1 ) . "', ";
-			}
-			if ($user ['user_autowarn'] != $range)
-				$update .= "user_autowarn = '$range', ";
-			if ($user ['user_showpain'] != $showpain) {
-				$update .= "user_showpain = '$showpain', ";
-				$_SESSION ['user'] ['user_showpain'] = $showpain;
-			}
-			if ($user ['user_style'] != $userstyle) {
-				$update .= "user_style = '$userstyle', ";
-				$_SESSION ['user'] ['user_style'] = $userstyle;
-			}
-			if ($success) {
-				if (! $update) {
-					$message .= '<div class="alert alert-info"><strong>Info:</strong> Es wurden keine Daten geändert.</div>';
-				} else {
-					$sql = sprintf ( "UPDATE %s SET %s WHERE user_id = '%s';", $db_users, substr ( $update, 0, - 2 ), $_SESSION ['user'] ['user_id'] );
-					$result = $sqldb->query ( $sql );
-					$message .= '<div class="alert alert-success"><strong>Erfolg:</strong> Die geänderten Daten wurden gespeichert.</div>';
+		if ($result->num_rows == 1) {
+			if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+				$user = $result->fetch_assoc ();
+				$email1 = GetParam ( 'inputEmail' );
+				$email2 = GetParam ( 'inputEmail2' );
+				$passwd1 = GetParam ( 'inputPassword' );
+				$passwd2 = GetParam ( 'inputPassword2' );
+				$range = GetParam ( 'inputRangeSlider' );
+				$showpain = GetParam ( 'radioShowPain' );
+				$userstyle = GetParam ( 'selectStyle' );
+				if ($user ['user_email'] != $email1) {
+					if ($email1 != $email2) {
+						$success = false;
+						$message = '<div class="alert alert-danger"><strong>Fehler:</strong> Die E-Mail-Adressen stimmen nicht überein.</div>';
+					} else
+						$update .= "user_email = '$email1', ";
+					$user ['user_email'] != $email1;
+				}
+				if ($passwd1 != '') {
+					if ($passwd1 != $passwd2) {
+						$success = false;
+						$message .= '<div class="alert alert-danger"><strong>Fehler:</strong> Die Passwörter stimmen nicht überein.</div>';
+					} else
+						$update .= "user_password = '" . md5 ( $passwd1 ) . "', ";
+				}
+				if ($user ['user_autowarn'] != $range) {
+					$update .= "user_autowarn = '$range', ";
+					$user ['user_autowarn'] = $range;
+				}
+				if ($user ['user_showpain'] != $showpain) {
+					$update .= "user_showpain = '$showpain', ";
+					$_SESSION ['user'] ['user_showpain'] = $showpain;
+					$user ['user_showpain'] = $showpain;
+				}
+				if ($user ['user_style'] != $userstyle) {
+					$update .= "user_style = '$userstyle', ";
+					$_SESSION ['user'] ['user_style'] = $userstyle;
+					$user ['user_style'] = $userstyle;
+				}
+				if ($success) {
+					if (! $update) {
+						$message .= '<div class="alert alert-info"><strong>Info:</strong> Es wurden keine Daten geändert.</div>';
+					} else {
+						$sql = sprintf ( "UPDATE %s SET %s WHERE user_id = '%s';", $db_users, substr ( $update, 0, - 2 ), $_SESSION ['user'] ['user_id'] );
+						$result = $sqldb->query ( $sql );
+						$message .= '<div class="alert alert-success"><strong>Erfolg:</strong> Die geänderten Daten wurden gespeichert.</div>';
+					}
 				}
 			}
-			$smarty->assign ( 'message', $message );
+			list ( $range1, $range2 ) = explode ( ',', $user ['user_autowarn'] );
+			$user ['range1'] = $range1;
+			$user ['range2'] = $range2;
+			$smarty->assign ( 'user', $user );
+		} else {
+			$message = '<div class="alert alert-danger"><strong>Fehler:</strong> Benutzerdatenbank inkonsistent!</div>';
 		}
-		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $db_users, 'user_id', $_SESSION ['user'] ['user_id'] );
-		$result = $sqldb->query ( $sql );
-		if ($result->num_rows == 1)
-			$user = $result->fetch_assoc ();
-		list ( $range1, $range2 ) = explode ( ',', $user ['user_autowarn'] );
-		$user ['range1'] = $range1;
-		$user ['range2'] = $range2;
-		$smarty->assign ( 'user', $user );
+		$smarty->assign ( 'message', $message );
 		$sql = "SELECT * FROM `$db_styles` ORDER BY style_name ASC";
 		$result = $sqldb->query ( $sql );
 		$styles = array ();
