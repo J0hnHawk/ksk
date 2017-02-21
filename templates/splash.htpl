@@ -57,7 +57,7 @@ body {
 						<div class="form-group">
 							<label for="userName" class="col-sm-3 control-label">Benutzername</label>
 							<div class="col-sm-9">
-								<input class="form-control" id="userName" name="userName" placeholder="Benutzername" type="text" required>
+								<input class="form-control" id="userName" name="userNam" placeholder="Benutzername" type="text" required>
 							</div>
 						</div>
 						<div class="form-group">

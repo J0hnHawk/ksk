@@ -1,11 +1,11 @@
 <?php
 function get_message($id, $var = '') {
 	$messages = messagesArray ();
-	return sprintf ( $message [$id] . " (%s)<br>%s", $id, $var );
+	return sprintf ( $messages [$id] . " (%s)<br>%s", $id, $var );
 }
 function getMessage($messageID, $errorCode) {
 	$messages = messagesArray ();
-	return sprintf ( $mesage [$messageID] . " (Errorcode %s)<br>", $errorCode );
+	return sprintf ( $messages [$messageID] . " (Errorcode %s)<br>", $errorCode );
 }
 function messagesArray() {
 	return array (
