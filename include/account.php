@@ -48,11 +48,11 @@ switch ($mode) {
 	case 'login' :
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$requestVars = checkVars ( array (
-					'inputUser' => 'F41;8LJGU;noarray,trim,notempty,mysql',
-					'inputPassword' => 'F42;4GHWB;noarray,trim,notempty,msql',
-					'checkboxAutologin' => 'F43;K6NXE;noarray,bolean' 
+					'userName' => '201;8LJGU;noarray,trim,notempty,mysql',
+					'userPass' => '202;4GHWB;noarray,trim,notempty,msql',
+					'autologin' => '203;K6NXE;noarray,bolean' 
 			) );
-			list($user_name,$user_pass,$autologin,$error) = $requestVars;
+			extract($requestVars);
 			if (! $error) {
 				$success = $login->login ( $user_name, $user_pass, session_id () );
 				if (! $success)

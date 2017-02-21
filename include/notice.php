@@ -9,6 +9,9 @@ function getMessage($messageID, $errorCode) {
 }
 function messagesArray() {
 	return array (
+			201 => 'Es wurde kein gültiger Benutzername eingeben',
+			202 => 'Es wurde kein gültiges Passwort eingegebn',
+			203 => 'Fehler bei der Übermittlung der Forumlardaten',
 			'F01' => 'Es wurde kein Datum eingegeben.',
 			'F02' => 'Es wurde kein gültiges Datum eingegeben.',
 			'F03' => 'Die Schmerzart wurde unzutreffend übermittelt!',

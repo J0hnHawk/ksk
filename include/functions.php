@@ -33,6 +33,7 @@ function checkVars($requestVars) {
 			switch ($check) {
 				case 'noarray' :
 					if (is_array ( $varValue ))
+						$errorCode = 203;
 						$error = true;
 					break;
 				case 'trim' :
