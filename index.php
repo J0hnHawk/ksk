@@ -7,7 +7,7 @@ date_default_timezone_set('Europe/Lisbon');
 // variables or catch variable name misspellings ... | E_NOTICE)
 error_reporting ( E_ERROR | E_WARNING | E_PARSE );
 error_reporting ( E_ALL );
-$ksk_version = "2.0.1";
+$ksk_version = "2.1.0";
 setlocale ( LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge' );
 require ("./include/config.php");
 require ("include/Login.class.php");
