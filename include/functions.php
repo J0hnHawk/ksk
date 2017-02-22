@@ -22,19 +22,25 @@ function GetParam($ParamName, $Method = "P", $DefaultValue = "") {
 			return $DefaultValue;
 	}
 }
-function checkVars($requestVars) {
+function checkVars($requestVars, $Method = 'P') {
 	$errorText = '';
 	foreach ( $requestVars as $varName => $codesAndChecks ) {
-		$varValue = GetParam ( $varName );
+		$varValue = GetParam ( $varName, $Method, false );
 		list ( $messageID, $errorCode, $checks2do ) = explode ( ';', $codesAndChecks );
 		$checks2do = explode ( ',', $checks2do );
 		$error = false;
 		foreach ( $checks2do as $check ) {
 			switch ($check) {
-				case 'noarray' :
-					if (is_array ( $varValue ))
-						$errorCode = 203;
+				case 'isset' :
+					if (! $varValue) {
+						$messageID = 203;
 						$error = true;
+					}
+				case 'noarray' :
+					if (is_array ( $varValue )) {
+						$messageID = 203;
+						$error = true;
+					}
 					break;
 				case 'trim' :
 					$varValue = trim ( $varValue );
@@ -43,12 +49,21 @@ function checkVars($requestVars) {
 					if ($varValue == '')
 						$error = true;
 					break;
-				case 'mres' :
-					$varValue = mysql_real_escape_string ( $varValue );
-					break;
 				case 'bolean' :
 					$varValue = filter_var ( $varValue, FILTER_VALIDATE_BOOLEAN );
 					break;
+				case 'email' :
+					if (! filter_var ( $varValue, FILTER_VALIDATE_EMAIL ))
+						$error = true;
+					break;
+				case 'int' :
+					$varValue = (int) $varValue;
+					break;
+				case 'alphanum':
+					if (! preg_match ( '/^\w+$/', trim ( $inputUser ) )) {
+						$error =true;
+					}
+						break;
 			}
 			if ($error) {
 				$errorText .= getMessage ( $messageID, $errorCode );

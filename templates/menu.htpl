@@ -34,9 +34,9 @@
 			</ul>
 			{else}
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#register" data-toggle="modal"> <span class="glyphicon glyphicon-user"></span> Registrieren
+				<li><a href="index.php?page=account&mode=register" data-toggle="modal"> <span class="glyphicon glyphicon-user"></span> Registrieren
 				</a></li>
-				<li><a href="#login" data-toggle="modal"> <span class="glyphicon glyphicon-log-in"></span> Anmelden
+				<li><a href="index.php?page=account&mode=login" data-toggle="modal"> <span class="glyphicon glyphicon-log-in"></span> Anmelden
 				</a></li>
 			</ul>
 			{/if}

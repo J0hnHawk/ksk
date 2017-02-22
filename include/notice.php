@@ -5,13 +5,16 @@ function get_message($id, $var = '') {
 }
 function getMessage($messageID, $errorCode) {
 	$messages = messagesArray ();
-	return sprintf ( $messages [$messageID] . " (Errorcode %s)<br>", $errorCode );
+	return sprintf ( $messages [$messageID] . " (%s)<br>", $errorCode );
 }
 function messagesArray() {
 	return array (
-			201 => 'Es wurde kein gültiger Benutzername eingeben',
-			202 => 'Es wurde kein gültiges Passwort eingegebn',
-			203 => 'Fehler bei der Übermittlung der Forumlardaten',
+			201 => 'Es wurde kein gültiger Benutzername eingeben.',
+			202 => 'Es wurde kein gültiges Passwort eingegebn.',
+			203 => 'Fehler bei der Übermittlung der Forumlardaten.',
+			204 => 'Es wurde keine gültige E-Mail-Adresse eingegeben.',
+			205 => 'Die eingegebene E-Mail-Adresse wird bereits verwendet.',
+			206 => 'Der Benutzername oder das Passwort ist falsch.',
 			'F01' => 'Es wurde kein Datum eingegeben.',
 			'F02' => 'Es wurde kein gültiges Datum eingegeben.',
 			'F03' => 'Die Schmerzart wurde unzutreffend übermittelt!',
