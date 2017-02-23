@@ -57,13 +57,13 @@ function checkVars($requestVars, $Method = 'P') {
 						$error = true;
 					break;
 				case 'int' :
-					$varValue = (int) $varValue;
+					$varValue = ( int ) $varValue;
 					break;
-				case 'alphanum':
-					if (! preg_match ( '/^\w+$/', trim ( $inputUser ) )) {
-						$error =true;
+				case 'alphanum' :
+					if (! preg_match ( '/^\w+$/', $varValue )) {
+						$error = true;
 					}
-						break;
+					break;
 			}
 			if ($error) {
 				$errorText .= getMessage ( $messageID, $errorCode );
