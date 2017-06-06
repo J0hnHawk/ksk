@@ -145,4 +145,4 @@ if ($error)
 	$smarty->assign ( 'error', $error );
 elseif ($success)
 	$smarty->assign ( 'success', $success );
-$smarty->assign ( 'template', 'drugs.htpl' );
+$smarty->assign ( 'template', 'drugs.tpl' );

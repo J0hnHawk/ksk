@@ -232,4 +232,4 @@ if (isset ( $_SESSION ['user'] )) {
 	}
 }
 $smarty->assign ( 'mode', $mode );
-$smarty->assign ( 'template', 'account.htpl' );
+$smarty->assign ( 'template', 'account.tpl' );

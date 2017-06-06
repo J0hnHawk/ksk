@@ -9,8 +9,8 @@ error_reporting ( E_ERROR | E_WARNING | E_PARSE );
 error_reporting ( E_ALL );
 $ksk_version = "2.1.0";
 setlocale ( LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge' );
-require ("./include/config.php");
-require ("include/Login.class.php");
+require ("./config.php");
+require ("./include/Login.class.php");
 require ('./include/smarty/Smarty.class.php');
 require ('./include/functions.php');
 
@@ -75,5 +75,5 @@ if (isset ( $_SESSION ['user'] )) {
 $smarty->assign ( 'showpain', $showpain );
 // Seitenbanner Ende
 $smarty->assign ( 'style', getStyle () );
-$smarty->display ( 'index.htpl' );
+$smarty->display ( 'index.tpl' );
 //var_dump($_SESSION);

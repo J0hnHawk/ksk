@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="styles/{$style}/css/bootstrap-datepicker3.min.css">
 </head>
 <body>
-	{include file="menu.htpl"} {assign var="datei" value="./templates/$template"} {if file_exists($datei)}
+	{include file="menu.tpl"} {assign var="datei" value="./templates/$template"} {if file_exists($datei)}
 	<div class="container">{include file="$template"}</div>
 	{else}
 	<div class="container">

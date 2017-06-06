@@ -77,7 +77,7 @@ while ( $ks_tag = $kstage->fetch_assoc () ) {
 }
 ksort ( $tage );
 $smarty->assign ( 'tage', $tage );
-$smarty->assign ( 'template', "report.htpl" );
+$smarty->assign ( 'template', "report.tpl" );
 // PDF Download
 $pain_range = pain_range ();
 $smarty->assign ( 'ekt', $pain_range ['first'] );

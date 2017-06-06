@@ -263,4 +263,4 @@ $smarty->assign ( 'ks_grad', isset ( $ks_tag ['ks_grad'] ) ? $ks_tag ['ks_grad']
 $smarty->assign ( 'ks_info', isset ( $ks_tag ['ks_info'] ) ? $ks_tag ['ks_info'] : '' );
 $smarty->assign ( 'ks_lastchange', isset ( $pain_lastchange ) ? $pain_lastchange : '' );
 $panel_month = $ks_day;
-$smarty->assign ( 'template', "edit.htpl" );
+$smarty->assign ( 'template', "edit.tpl" );

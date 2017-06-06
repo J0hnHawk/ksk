@@ -21,7 +21,7 @@ $modes = array (
 if (! in_array ( $mode, $modes ))
 	$mode = 'ppm';
 $smarty->assign ( 'mode', $mode );
-$smarty->assign ( 'template', "statistics.htpl" );
+$smarty->assign ( 'template', "statistics.tpl" );
 switch ($mode) {
 	case 'ppw' :
 		$daynames = array (
