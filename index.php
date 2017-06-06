@@ -33,6 +33,7 @@ $pages = array (
 		'account',
 		'edit',
 		'report',
+		'report_pdf',
 		'statistics',
 		'u2p0',
 		'drugs' 
