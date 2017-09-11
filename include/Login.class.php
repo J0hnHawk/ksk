@@ -27,10 +27,7 @@ class loginCheck {
 	}
 	public function login($user, $pass, $sessid, $md5 = false) {
 		$this->user = $user;
-		if ($md5)
-			$this->pass = $pass;
-		else
-			$this->pass = md5 ( $pass );
+		$this->pass = $pass;
 		$this->sessid = $sessid;
 		
 		$sql = sprintf ( "SELECT * FROM %s WHERE %s = '%s';", $this->prefi . "user", 'user_name', $this->user );
@@ -38,7 +35,14 @@ class loginCheck {
 		
 		if ($result->num_rows == 1) {
 			$user = $result->fetch_assoc ();
-			if ($user ['user_password'] == $this->pass) {
+			$passwordCorrect = false;
+			if ($md5 && ($user ['user_password'] == $this->pass)) {
+				$passwordCorrect = true;
+			} elseif (! $md5 && (password_verify ( $this->pass, $user ['user_password'] ))) {
+				$passwordCorrect = true;
+			}
+			if ($passwordCorrect) {
+				// if ($user ['user_password'] == $this->pass) {
 				list ( $range1, $range2 ) = explode ( ',', $user ['user_autowarn'] );
 				$user ['range1'] = $range1;
 				$user ['range2'] = $range2;

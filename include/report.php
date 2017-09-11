@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of the "Kopfschmerzkalender" package.
+ * Copyright (C) 2017 John Hawk <john.hawk@gmx.net>
+ *
+ * "NF Marsch Webstats" is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * "NF Marsch Webstats" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+if (! defined ( 'IN_KSK' )) {
+	exit ();
+}
+
 if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 	include("report_pdf.php");
 }
@@ -31,8 +53,12 @@ $monat = GetParam ( 'month', 'G', date ( 'm' ) ) + 0;
 $jahr = GetParam ( 'year', 'G', date ( 'Y' ) ) + 0;
 $tage = array ();
 $start = $panel_month = mktime ( 0, 0, 0, $monat, 1, $jahr );
+$nmonat = $panel_month = mktime ( 0, 0, 0, $monat+1, 1, $jahr );
+$lmonat = $panel_month = mktime ( 0, 0, 0, $monat-1, 1, $jahr );
 $ende = mktime ( 0, 0, 0, date ( 'm', $start ), date ( 't', $start ), date ( 'Y', $start ) );
 $smarty->assign ( 'amonat', $start );
+$smarty->assign ( 'lmonat', $lmonat );
+$smarty->assign ( 'nmonat', $nmonat );
 
 if ($mode == 'sheet') {
 	$weekday_first = date ( 'w', $start );

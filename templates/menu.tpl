@@ -13,7 +13,7 @@
 			<ul class="nav navbar-nav">
 				<li class="{if $page == 'edit'}active{/if}"><a href="index.php?page=edit"> <span class="glyphicon glyphicon-pencil"></span> Erfassen
 				</a></li>
-				<li class="dropdown {if $page == 'report'}active{/if}"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-calendar"></span> &Uuml;bersicht <span class="caret"></span>
+				<li class="dropdown {if $page == 'report'}active{/if}"><a class="dropdown-toggle disabled" href="index.php?page=report&mode=list{if isset($amonat)}&month={$amonat|date_format:'m'}&year={$amonat|date_format:'Y'}{/if}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-calendar"></span> &Uuml;bersicht <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li class="{if isset($mode) && $mode == 'sheet'}active{/if}"><a href="index.php?page=report&mode=sheet{if isset($amonat)}&month={$amonat|date_format:'m'}&year={$amonat|date_format:'Y'}{/if}">Kalenderblatt</a></li>

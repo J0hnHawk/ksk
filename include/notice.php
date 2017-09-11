@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of the "Kopfschmerzkalender" package.
+ * Copyright (C) 2017 John Hawk <john.hawk@gmx.net>
+ *
+ * "NF Marsch Webstats" is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * "NF Marsch Webstats" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+if (! defined ( 'IN_KSK' )) {
+	exit ();
+}
+
 function get_message($id, $var = '') {
 	$messages = messagesArray ();
 	return sprintf ( $messages [$id] . " (%s)<br>%s", $id, $var );
@@ -16,6 +38,8 @@ function messagesArray() {
 			205 => 'Die E-Mail-Adresse wird bereits verwendet.',
 			206 => 'Der Benutzername oder das Passwort ist falsch.',
 			207 => 'Der Benutzername wird bereits verwendet.',
+			208 => 'Datenbankfehler!',
+			209 => 'Das Benutzerkonto wurde angelegt.',
 			'F01' => 'Es wurde kein Datum eingegeben.',
 			'F02' => 'Es wurde kein gültiges Datum eingegeben.',
 			'F03' => 'Die Schmerzart wurde unzutreffend übermittelt!',

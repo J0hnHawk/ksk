@@ -1,5 +1,12 @@
 <div class="page-header hidden-xs">
-	<h3>Übersicht für {$amonat|date_format:'%B %Y'|utf8_encode}</h3>
+	<!-- |utf8_encode -->
+	<h3 class="text-center">
+		<a href="index.php?page=report&mode={$mode}&month={$amonat|date_format:'m'-1}&year={$amonat|date_format:'Y'}"
+			class="btn btn-default pull-left col-sm-2"> <span aria-hidden="true">&larr;</span> {$lmonat|date_format:'%B %Y'}
+		</a>{$amonat|date_format:'%B %Y'}<a class="btn btn-default pull-right col-sm-2"
+			href="index.php?page=report&mode={$mode}&month={$amonat|date_format:'m'+1}&year={$amonat|date_format:'Y'}" role="button"> {$nmonat|date_format:'%B %Y'} <span
+			aria-hidden="true">&rarr;</span></a>
+	</h3>
 </div>
 <div class="row">
 	<div class="col-sm-9">
@@ -18,35 +25,38 @@
 			<table class="table table-bordered calendar">
 				<thead>
 					<tr>
-						<th rowspan="2">Tag</th>
-						<th colspan="3">Art</th>
-						<th rowspan="2">Medi<span class="hidden-xs">kamente</span></th>
-						<th colspan="5">Grad<span class="hidden-xs">uierung</span></th>
-						<th rowspan="2">Info<span class="hidden-xs">rmationen</span></th>
+						<th rowspan="2" class="text-center col-xs-1">Tag</th>
+						<th colspan="3" class="text-center col-xs-1">Art</th>
+						<th rowspan="2" class="text-center">Medi<span class="hidden-xs">kamente</span></th>
+						<th colspan="5" class="text-center col-xs-1">Grad<span class="hidden-xs">uierung</span></th>
+						<th rowspan="2" class="text-center">Info<span class="hidden-xs">rmationen</span></th>
 					</tr>
 					<tr>
-						<th>M</th>
-						<th>S</th>
-						<th>?</th>
-						<th>0</th>
-						<th>1</th>
-						<th>2</th>
-						<th>3</th>
-						<th>4</th>
+						<th class="text-center">M</th>
+						<th class="text-center">S</th>
+						<th class="text-center">?</th>
+						<th class="text-center">0</th>
+						<th class="text-center">1</th>
+						<th class="text-center">2</th>
+						<th class="text-center">3</th>
+						<th class="text-center">4</th>
 					</tr>
 				</thead>
 				<tbody>
 					{assign "check" "glyphicon-check"} {assign "unchecked" "glyphicon-unchecked"} {foreach from=$tage key=datum item=daten}
-					<tr {if freiertag($datum)}class="weekendlist2" {/if} data-toggle="modal" href="#day_details" data-modal_title="{$datum|date_format:'%d.%m.%Y'}" data-modal_type="{$daten.ks_art}" data-modal_drugs="{foreach from=$daten.ks_medis item=medi name=drugs}{$medikamente[$medi].name}<br>{/foreach}"
+					<tr {if freiertag($datum)}class="weekendlist2" {/if} data-toggle="modal" href="#day_details" data-modal_title="{$datum|date_format:'%d.%m.%Y'}"
+						data-modal_type="{$daten.ks_art}" data-modal_drugs="{foreach from=$daten.ks_medis item=medi name=drugs}{$medikamente[$medi].name}<br>{/foreach}"
 						data-modal_grad="{$daten.ks_grad}" data-modal_info="{$daten.ks_info}">
 						<td>{$datum|date_format:'%d.'}<span class="hidden-xs">{$datum|date_format:'%m.%Y'}</span><a href="index.php?seite=edit&amp;date={$datum}"></a>
 						</td>
-						<td><span class="glyphicon {if $daten.ks_art & 1}{$check}{else}{$unchecked}{/if}"></span></td>
-						<td><span class="glyphicon {if $daten.ks_art & 2}{$check}{else}{$unchecked}{/if}"></span></td>
-						<td><span class="glyphicon {if $daten.ks_art & 4}{$check}{else}{$unchecked}{/if}"></span></td>
-						<td>{foreach from=$daten.ks_medis item=medi name=drugs}<span class="hidden-xs">{$medikamente.$medi.name}</span><span class="hidden-sm hidden-md hidden-lg">{$medikamente.$medi.short}</span>{if $smarty.foreach.drugs.last}{else}, {/if}{/foreach}
+						<td class="text-center"><span class="text-muted glyphicon {if $daten.ks_art & 1}{$check}{else}{$unchecked}{/if}"></span></td>
+						<td class="text-center"><span class="text-muted glyphicon {if $daten.ks_art & 2}{$check}{else}{$unchecked}{/if}"></span></td>
+						<td class="text-center"><span class="text-muted glyphicon {if $daten.ks_art & 4}{$check}{else}{$unchecked}{/if}"></span></td>
+						<td>{foreach from=$daten.ks_medis item=medi name=drugs}<span class="hidden-xs">{$medikamente.$medi.name}</span><span
+							class="hidden-sm hidden-md hidden-lg">{$medikamente.$medi.short}</span>{if $smarty.foreach.drugs.last}{else}, {/if}{/foreach}
 						</td> {for $grad = 0 to 4}
-						<td><span class="glyphicon {if isset($daten.ks_grad) && $daten.ks_grad == $grad}{$check}{else}{$unchecked}{/if}" aria-hidden="true"></span></td> {/for}
+						<td class="text-center"><span class="text-muted glyphicon {if isset($daten.ks_grad) && $daten.ks_grad == $grad}{$check}{else}{$unchecked}{/if}" aria-hidden="true"></span></td>
+						{/for}
 						<td>{$daten.ks_info}</td>
 					</tr>
 					{/foreach}
@@ -75,9 +85,13 @@
 				<tbody>
 					{foreach from=$tage key=datum item=daten name=calendar} {if $smarty.foreach.calendar.iteration%7 == 1}
 					<tr>
-						{/if} {if $daten.ks_art & 1}{assign "class" "danger"}{elseif $daten.ks_art == 0}{assign "class" "success"}{elseif $daten.ks_art & 2}{assign "class" "warning"}{elseif $daten.ks_art & 4}{assign "class" "info"}{else}{assign "class" ""}{/if}
-						<td class="{$class}" data-toggle="modal" href="#day_details" data-modal_title="{$datum|date_format:'%d.%m.%Y'}" data-modal_type="{$daten.ks_art}" data-modal_drugs="{foreach from=$daten.ks_medis item=medi name=drugs}{$medikamente[$medi].name}<br>{/foreach}" data-modal_grad="{$daten.ks_grad}"
-							data-modal_info="{$daten.ks_info}">{if $datum|date_format:'%m' != $amonat|date_format:'%m'} {assign "dayclass" "othermonth"} {else} {if freiertag($datum)} {assign "dayclass" "weekend"} {else} {assign "dayclass" "weekday"} {/if} {/if}
+						{/if} {if $daten.ks_art & 1}{assign "class" "danger"}{elseif $daten.ks_art == 0}{assign "class" "success"}{elseif $daten.ks_art & 2}{assign
+						"class" "warning"}{elseif $daten.ks_art & 4}{assign "class" "info"}{else}{assign "class" ""}{/if}
+						<td class="{$class}" data-toggle="modal" href="#day_details" data-modal_title="{$datum|date_format:'%d.%m.%Y'}"
+							data-modal_type="{$daten.ks_art}"
+							data-modal_drugs="{foreach from=$daten.ks_medis item=medi name=drugs}{$medikamente[$medi].name}<br>{/foreach}"
+							data-modal_grad="{$daten.ks_grad}" data-modal_info="{$daten.ks_info}">{if $datum|date_format:'%m' != $amonat|date_format:'%m'} {assign
+							"dayclass" "othermonth"} {else} {if freiertag($datum)} {assign "dayclass" "weekend"} {else} {assign "dayclass" "weekday"} {/if} {/if}
 							<p class="{$dayclass}">
 								{$datum|date_format:'%d'+0}
 								<!-- {$datum|date_format:'%d.%m.%Y - %H:%M'} -->
@@ -90,6 +104,7 @@
 								{if $smarty.foreach.drugs.last}{else}, {/if}{/foreach}&nbsp;
 							</p> {if isset($daten.ks_grad) && $daten.ks_grad > -1}
 							<p class="badge">{$daten.ks_grad}{else}
+							
 							<p>&nbsp;{/if}</p>
 						</td> {if $smarty.foreach.calendar.iteration%7 == 0}
 					</tr>
@@ -99,14 +114,18 @@
 			{/if}
 
 		</div>
+		<!-- 
 		<nav>
 			<ul class="pager">
-				<li class="previous"><a href="index.php?page=report&mode={$mode}&month={$amonat|date_format:'m'-1}&year={$amonat|date_format:'Y'}"> <span aria-hidden="true">&larr;</span> vorheriger
+				<li class="previous"><a href="index.php?page=report&mode={$mode}&month={$amonat|date_format:'m'-1}&year={$amonat|date_format:'Y'}"> <span
+						aria-hidden="true">&larr;</span> vorheriger
 				</a></li>
-				<li class="next"><a href="index.php?page=report&mode={$mode}&month={$amonat|date_format:'m'+1}&year={$amonat|date_format:'Y'}"> nächster <span aria-hidden="true">&rarr;</span>
+				<li class="next"><a href="index.php?page=report&mode={$mode}&month={$amonat|date_format:'m'+1}&year={$amonat|date_format:'Y'}"> nächster <span
+						aria-hidden="true">&rarr;</span>
 				</a></li>
 			</ul>
 		</nav>
+		 -->
 	</div>
 	<div class="col-sm-3">
 		<div class="panel {$panel_type} {if !$showpain}collapse{/if}" id="paindays">
@@ -175,6 +194,7 @@
 									<label><input type="checkbox" value="1" name="info">Informationen / Bemerkungen ausgeben</label>
 								</div>
 							</div>
+					
 					</fieldset>
 				</div>
 				<div class="modal-footer">

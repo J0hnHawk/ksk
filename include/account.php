@@ -1,5 +1,27 @@
 <?php
 /**
+ * This file is part of the "Kopfschmerzkalender" package.
+ * Copyright (C) 2017 John Hawk <john.hawk@gmx.net>
+ *
+ * "NF Marsch Webstats" is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * "NF Marsch Webstats" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+if (! defined ( 'IN_KSK' )) {
+	exit ();
+}
+
+ /**
  * 
  * @todo case 'edit': Die POST Variabeln müssen noch überprüft werden
  * @todo Registrierungs- und Passwortwiederherstellungsprozess funktioniert noch nicht
@@ -188,10 +210,13 @@ if (isset ( $_SESSION ['user'] )) {
 					}
 					if ($rows == 0) {
 						$inputPassword = password_hash ( $sqldb->real_escape_string ( $inputPassword ), PASSWORD_DEFAULT );
-						$format = 'INSERT INTO %s (user_name, user_email,user_password) VALUES ("%s", "%s", "%s")';
+						$format = 'INSERT INTO %s (user_name, user_email,user_password, user_autowarn) VALUES ("%s", "%s", "%s", "5,8")';
 						$sql = sprintf ( $format, $db_users, $inputUser, $inputEmail, $inputPassword );
 						if (! $result = $sqldb->query ( $sql )) {
 							dbstat ( $result, $sql );
+							$message = '<div class="alert alert-danger"><strong>Fehler:</strong> ' . getMessage ( 208, 'T4XR9' ) . '</div>';
+						} else {
+							$message = '<div class="alert alert-success"><strong>Erfolg:</strong> ' . getMessage ( 209, 'JWD59' ) . '</div>';
 						}
 					}
 				}
